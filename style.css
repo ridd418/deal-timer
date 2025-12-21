@@ -7,7 +7,17 @@
   --font: 'Inter', sans-serif;
 }
 
+/* Reset & base styles */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
+  text-align: center;
   background: var(--bg);
   color: var(--text);
   font-family: var(--font);
@@ -70,12 +80,12 @@ button {
   border-radius: 0.5rem;
   font-size: 1rem;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background-color 0.2s ease;
   font-weight: 600;
 }
 
 button:hover {
-  background: #0ea5e9;
+  background-color: #0ea5e9;
 }
 
 button.secondary {
@@ -83,8 +93,17 @@ button.secondary {
   color: var(--text);
 }
 
-.footer {
-  margin-top: 2rem;
-  opacity: 0.6;
-  font-size: 0.9rem;
+a {
+  color: #6c63ff;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* Footer */
+footer {
+  margin-top: 1.5rem;
+  font-size: 0.8rem;
+  color: #9ca3af;
 }
