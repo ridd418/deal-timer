@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Metadata -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Deal Timer Demo</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    </head>
+    <body>
+
+    <!-- Main App -->
+    <div class="container" id="app">
+        <head>
+            <h1 class="title">🔥 Limited Time Deal</h1>
+        </head>
+
+        <main>
+            <section>
+                <div class="timer-display" id="timer-display">00:00:00</div>
+                <p class="status-text" id="status-text">Deal not started</p>
+            </section>
+
+            <section class="controls">
+                <input type="number" id="deal-minutes" placeholder="Deal duration (minutes)" min="1"/>
+                <button id="start-deal">Start Deal</button>
+                <button id="reset-deal" class="secondary">Reset</button>
+            </section>
+        </main>
+    </div>
+    
+    <!-- Footnotes -->
+    <footer>
+        <p>Deal Timer Demo &mdash; Built for concept showcase</p>
+        <p>&copy; 2025 Ridd418 &#124; <a href="https://github.com/ridd418/rps-game" target="_blank" rel="noopener noreferrer"><strong>GitHub</strong></a></p>
+    </footer>
+    
+    <!-- Importmap -->
+    <script type="importmap"> 
+        {
+            "imports": {
+                "timer": "./modules/timer.js",
+                "stateStore": "./modules/stateStore.js"
+            }
+        }
+    </script>
+
+    <!-- JavaScript -->
+    <script src="script.js" type="module" defer></script>
+</body>
+</html>
