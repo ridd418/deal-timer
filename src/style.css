@@ -5,6 +5,8 @@
   --accent: #38bdf8;
   --danger: #ef4444;
   --font: 'Inter', sans-serif;
+  --foot: #9ca3af;
+  --link:  #6c63ff;
 }
 
 /* Reset & base styles */
@@ -93,8 +95,12 @@ button.secondary {
   color: var(--text);
 }
 
+button.secondary:hover {
+  background-color: #df0c0c;
+}
+
 a {
-  color: #6c63ff;
+  color: var(--link);
   text-decoration: none;
 }
 a:hover {
@@ -105,5 +111,5 @@ a:hover {
 footer {
   margin-top: 1.5rem;
   font-size: 0.8rem;
-  color: #9ca3af;
+  color: var(--foot);
 }
