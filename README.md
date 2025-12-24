@@ -1,4 +1,4 @@
-# ⏳ Deal Timer
+# Deal Timer ⏳
 
 ## Overview
 A modern **deal countdown timer** built with **HTML, CSS, and Vanilla JavaScript**, designed to persist accurately across page reloads using `localStorage`.
@@ -21,7 +21,7 @@ This project emphasizes **clean architecture**, **modular JavaScript with ES mod
 ## 🖥️ Demo
 
 Check out the live demo:
-<a href="https://ridd418.github.io/deal-timer/src" target="_blank" rel="noopener noreferrer">
+<a href="https://ridd418.github.io/deal-timer/" target="_blank" rel="noopener noreferrer">
   Live Demo
 </a>
 
@@ -94,7 +94,7 @@ No frameworks. No build step. Just clean, modern web fundamentals.
     cd deal-timer
     ```
 
-2. Install `Docker` and `Docker Compose` if not alreay installed
+2. Install `Docker` and `Docker Compose` if not already installed
 
 3. Deploy using docker (from the project folder):
 
