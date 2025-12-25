@@ -24,15 +24,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const setDealStatus = (status) => {
 
-        if (status === "NOT_STARTED") {
-            dealStatus.textContent = "Deal not started"
-            dealStatus.style.color = ''
-        }else if (status === "LIVE") {
-            dealStatus.textContent = "Deal is Live!"
-            dealStatus.style.color = 'limegreen'
-        }else if (status === "OVER") {
-            dealStatus.textContent = "Deal Over!"
-            dealStatus.style.color = 'red'
+        switch (status) {
+            case DEAL_STATUS.NOT_STARTED:
+                dealStatus.textContent = "Deal not started"
+                dealStatus.style.color = ''
+                break
+            case DEAL_STATUS.LIVE:
+                dealStatus.textContent = "Deal is Live!"
+                dealStatus.style.color = 'limegreen'
+                break
+            case DEAL_STATUS.OVER:
+                dealStatus.textContent = "Deal Over!"
+                dealStatus.style.color = 'red'
+                break
         }
     }
 
@@ -52,9 +56,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         minutesInput.value = ''
         const sec = minutesValue * 60
-        timer.start(sec)
-        setDealStatus(DEAL_STATUS.LIVE)
-        stateStore.logState("timer-start-duration", sec)
+        if (timer.start(sec)) {
+            setDealStatus(DEAL_STATUS.LIVE)
+            stateStore.logState("timer-start-duration", sec)
+        }
     }
 
     const coldStart = () => {

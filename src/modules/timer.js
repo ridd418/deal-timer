@@ -27,7 +27,7 @@ const createTimer = (displayUpdater, onEnd) => {
     // Methods
     const start = (sec) => {
         // Avoids simultaneous timer intervals or running when sec <= 0.
-        if (clockInterval || sec <= 0) return
+        if (clockInterval || sec <= 0) return false
 
         setTimeVariables(sec)
 
@@ -43,6 +43,7 @@ const createTimer = (displayUpdater, onEnd) => {
         // Calling immediately for first run.
         updateTicks()
         clockInterval = setInterval(updateTicks, 1000)
+        return true
     }
 
     const reset = () => {
