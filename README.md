@@ -1,41 +1,163 @@
 # Deal Timer ⏳
 
 ## Overview
-A modern **deal countdown timer** built with **HTML, CSS, and Vanilla JavaScript**, designed to persist accurately across page reloads using `localStorage`.
 
-This project emphasizes **clean architecture**, **modular JavaScript with ES modules**, and a simple, focused UI for demonstrating time-based deal logic commonly used in e-commerce and promotions.
+A modern **deal countdown timer** built with **HTML, CSS, and Vanilla JavaScript**.
+
+The app implements a simple time-based deal mechanic commonly seen in e-commerce,
+but is intentionally designed with a focus on **architecture, state management,
+and modular JavaScript**, rather than UI complexity.
+
+---
+
+## Why this project exists
+
+This project is **not** about building a visually impressive countdown timer.
+
+It exists as a focused experiment in treating frontend JavaScript as a **system**
+rather than a collection of scripts.
+
+The goal was to:
+- design a reusable timer engine independent of the DOM
+- model time-based state in a way that survives page reloads
+- separate persistence, domain logic, and UI concerns cleanly
+- explore how far architectural clarity can go without frameworks or build tools
+
+The resulting code reflects lessons learned through refactoring and iteration,
+not an attempt to produce the shortest or simplest implementation.
+
+The minimal UI is intentional — it keeps attention on **structure, boundaries,
+and data flow**, not presentation.
+
+---
+
+## 🧠 Engineering Focus
+
+This project focuses on **how** the timer is built, not just **what** it does.
+
+Key engineering goals:
+
+- Treat time as a source of truth
+- Isolate countdown logic from the DOM
+- Encapsulate persistence behind a small API
+- Keep the app entry point as an orchestration layer
+- Make core logic reusable outside this specific UI
+
+The code is written to be **read**, **reasoned about**, and **extended**, rather
+than optimized for brevity.
+
+---
+
+## 🏗️ Architecture Overview
+
+```
+script.js (app orchestrator)
+  ├─ handles user events
+  ├─ maps domain state → UI
+  ├─ coordinates modules
+  │
+  ├─ timer.js (domain logic)
+  │    ├─ owns countdown mechanics
+  │    ├─ tracks remaining time
+  │    └─ exposes a small public API
+  │
+  └─ stateStore.js (persistence)
+       ├─ stores start timestamp + duration
+       ├─ computes remaining time on load
+       └─ abstracts localStorage access
+```
+
+**Key idea:**  
+The UI never calculates time or deal state directly.  
+All time-based decisions flow through the timer and persistence layers.
+
+---
+
+## 🧩 Design Decisions
+
+### 1. Timestamp-based persistence instead of ticking state
+Rather than storing “seconds remaining”, the app stores:
+- when the deal started
+- how long it should last
+
+This allows the timer to:
+- survive page reloads
+- remain accurate across browser restarts
+- avoid drift caused by paused or throttled intervals
+
+---
+
+### 2. DOM-agnostic timer module
+`timer.js` contains no DOM access.
+
+It:
+- owns countdown mechanics
+- exposes a small API (`start`, `reset`, `isRunning`)
+- communicates via callbacks
+
+This makes the timer reusable in:
+- different UIs
+- tests
+- non-browser environments
+
+---
+
+### 3. Thin orchestration layer
+`script.js` acts as a coordinator, not a logic container.
+
+It:
+- listens for user interactions
+- calls module APIs
+- updates the DOM based on returned state
+
+It does **not**:
+- calculate time
+- enforce deal rules
+- manage persistence logic
+
+---
+
+### 4. Explicit deal state modeling
+Deal states (*Not Started*, *Live*, *Over*) are treated as explicit domain concepts,
+not inferred implicitly from UI conditions.
+
+This improves:
+- readability
+- debuggability
+- future extensibility
 
 ---
 
 ## 🎯 Features
 
-- **Configurable Deal Duration** – Set the deal length in minutes  
-- **Persistent Countdown** – Timer survives page reloads and browser refreshes  
-- **Live Status Updates** – Clear visual states: *Not Started*, *Live*, *Deal Over*  
-- **Accurate Time Tracking** – Based on timestamps, not intervals  
-- **Reset Control** – Restart the deal and clear stored state  
-- **Modern UI** – Clean, responsive layout with accessible contrast  
+- Configurable deal duration (in minutes)
+- Persistent countdown across reloads
+- Clear deal states: *Not Started*, *Live*, *Deal Over*
+- Timestamp-based accuracy
+- Reset control with state cleanup
+- Clean, responsive UI
 
 ---
 
 ## 🖥️ Demo
 
-Check out the live demo:
+Live demo:  
 <a href="https://ridd418.github.io/deal-timer/" target="_blank" rel="noopener noreferrer">
-  Live Demo
+https://ridd418.github.io/deal-timer/
 </a>
 
 ---
 
 ## 🧠 How It Works
 
-Instead of relying on an in-memory countdown, the app stores **when the deal started** and **how long it lasts**.
+Instead of relying on an in-memory countdown, the app stores **when the deal started**
+and **how long it lasts**.
 
 ### Stored State (`localStorage`)
 ```js
 {
-  start: Date.now(),      // timestamp in milliseconds
-  duration: seconds      // total deal duration
+  start: Date.now(),   // timestamp in milliseconds
+  duration: seconds   // total deal duration
 }
 ```
 
@@ -45,43 +167,32 @@ secondsPassed = now - start
 secondsLeft   = duration - secondsPassed
 ```
 
-- If `secondsLeft > 0` → resume countdown  
-- If `secondsLeft <= 0` → mark deal as over  
+- If `secondsLeft > 0` → resume countdown
+- If `secondsLeft <= 0` → mark deal as over
 
-This ensures the timer remains accurate even if the tab is closed or refreshed.
-
-> Note: There is slight drift of less than a second for the timer to resume after page reload, which is normally negligible under normal circumstances.
-
----
-
-## 🧩 Architecture
-
-The project is intentionally split into focused modules:
-
-- **`script.js`** – App orchestration, UI updates, and event handling  
-- **`timer.js`** – Reusable countdown timer logic (no DOM dependency)  
-- **`stateStore.js`** – Persistent storage abstraction using `localStorage`  
-
-This separation keeps logic testable, reusable, and easy to extend.
+> Note: There may be a sub-second delay when resuming after reload, which is
+> generally negligible in real-world usage.
 
 ---
 
 ## 💡 Use Cases
 
-- Flash sales / limited-time offers  
-- E-commerce deal banners  
-- Marketing countdowns  
-- JavaScript architecture demos  
+- Flash sales / limited-time offers
+- Promotional countdowns
+- E-commerce deal banners
+- Frontend architecture demonstrations
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **HTML5**
-- **CSS3** (modern variables, responsive layout)
-- **JavaScript (ES6+ Modules)**
+- HTML5
+- CSS3 (modern variables, responsive layout)
+- JavaScript (ES6 modules)
 
-No frameworks. No build step. Just clean, modern web fundamentals.
+No frameworks.  
+No build step.  
+Just modern web fundamentals.
 
 ---
 
@@ -89,31 +200,20 @@ No frameworks. No build step. Just clean, modern web fundamentals.
 
 1. Clone the repository:
 
-    ```bash
-    git clone https://github.com/ridd418/deal-timer.git
-    cd deal-timer
-    ```
-
-2. Install `Docker` and `Docker Compose` if not already installed
-
-3. Deploy using docker (from the project folder):
-
-    ```bash
-    docker compose up -d
-    ```
-
-4. Open `http://localhost:4000/` in your browser.
-
-That's it!
-
-Tip: You can change the host `port` map in the the `compose.yaml` to what ever you like.
-
-Example:
-
-```yaml
-    ports:
-      - "<your port here>:80"
+```bash
+git clone https://github.com/ridd418/deal-timer.git
+cd deal-timer
 ```
+
+2. Install **Docker** and **Docker Compose**
+
+3. Run the project:
+
+```bash
+docker compose up -d
+```
+
+4. Open <a href="http://localhost:4000/" target="_blank" rel="noopener noreferrer">http://localhost:4000</a> in your browser
 
 **Clean up:**
 
